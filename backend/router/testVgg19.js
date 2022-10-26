@@ -22,5 +22,6 @@ async function runModel() {
 //   let max_dim = 512;
 //   img = tf.image.
 // }
-
 runModel();
+console.log(vgg19model);
+
