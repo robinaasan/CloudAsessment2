@@ -8,12 +8,6 @@ const PORT = 3000;
 
 const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
-// const handler = tfn.io.fileSystem(
-//   'https://vgg19-tensorflowjs-model/model/model.json'
-// );
-//require('@tensorflow/tfjs-node');
-
-//should use vgg19 and return mashup photo of the ones in the img folder
 
 let vgg19model;
 
@@ -22,15 +16,41 @@ async function runModel() {
     vgg19model = await tf.loadLayersModel(
       `file://vgg19-tensorflowjs-model/model/model.json`
     );
-    console.log(vgg19model);
   }
-  const myImage = new Image(200, 200);
-  myImage.src = 'Green_Sea_Turtle_grazing_seagrass.jpg';
+  // if (!vgg19modelGraph) {
+  //   vgg19model = await tf.loadGraphModel(
+  //     `file://vgg19-tensorflowjs-model/model/model.json`
+  //   );
+  // }
+  //console.log(vgg19model);
+
+
+
+  // var img = new Image();
+  // img.src = 'router/img/Green_Sea_Turtle_grazing_seagrass.jpg';
+
+  // var styleImg = new Image();
+  // styleImg.src = 'router/img/The_Great_Wave_off_Kenagawa.jpg.jpg';
+
+  const imageTensor = preprocess(img);
+  const styleImageTensor = preprocess(styleImg);
+
+  // Swap imagetensor and styleIT for desired output
+  let result = model.execute([imageTensor, styleImageTensor]);
+
+   tf.browser.toPixels(tf.squeeze(result), canvas);
+
+  //console.log(vgg19modelGraph);
+}
+runModel();
+
+function preprocess(imageData){
+  let imageTensor = tf.browser.fromPixels(imageData); // convert image to a tensor
+  const offset = tf.scalar(255.0);
+  const normalized = tf.scalar(1.0).sub(imageTensor.div(offset));
+  const batched = normalized.expandDims(0);
+  return batched;
 }
 
-// function loadPicture(path_to_picture) {
-//   let max_dim = 512;
-//   img = tf.image.
-// }
 
-runModel();
+

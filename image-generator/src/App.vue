@@ -37,13 +37,27 @@
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: 'App',
   data: () => ({
     drawer: true,
   }),
+  methods: {
+    async getPic() {
+      let str = "data:image/jpeg;base64,";
+      let pi = await axios.get("api/tensorCompute"); //Test connection with backend, console should respond!
+      console.log(pi.data);
+      str += pi.data;
+      this.pic = str;
+    },
+
+    async preImages() {
+      let images = await axios.get("/api/persistenceCheck/tensorPictures");
+      console.log(images.data);
+    },
+  },
   mounted() {
     // axios.get('api/testRoute'); //Test connection with backend, console should respond!
     // console.log(this.getSomethin());
