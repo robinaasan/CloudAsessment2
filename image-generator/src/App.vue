@@ -1,25 +1,38 @@
 <template>
-  <v-layout style="z-index: 0">
-    <v-app-bar color="grey-lighten-2"></v-app-bar>
-    <v-navigation-drawer color="grey-darken-2" permanent></v-navigation-drawer>
-    <v-navigation-drawer
+  <v-app>
+    <v-navigation-drawer color="grey-darken-2" v-model="drawer" temporary>
+      <v-list nav>
+        <router-link to="upload">
+          <v-list-item
+            prepend-icon="mdi-email"
+            title="upload"
+            value="upload"
+          ></v-list-item
+        ></router-link>
+        <router-link to="load">
+          <v-list-item
+            prepend-icon="mdi-account-supervisor-circle"
+            title="load"
+            value="load"
+          ></v-list-item>
+        </router-link>
+      </v-list>
+    </v-navigation-drawer>
+    <v-app-bar color="grey-lighten-2">
+      <v-app-bar-nav-icon
+        variant="text"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+    </v-app-bar>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+    <!-- <v-navigation-drawer
       color="grey-darken-2"
       permanent
       location="right"
-    ></v-navigation-drawer>
-    <v-main>
-      <v-row justify="center">
-        <v-col cols="6">
-          <v-card height="400px"
-            >Drop image here: <input multiple type="file"
-          /></v-card>
-        </v-col>
-        <v-col cols="6">
-          <v-card height="400px">Output here</v-card>
-        </v-col>
-      </v-row>
-    </v-main>
-  </v-layout>
+    ></v-navigation-drawer> -->
+  </v-app>
 </template>
 
 <script>
@@ -28,12 +41,24 @@ import axios from 'axios';
 
 export default {
   name: 'App',
-
   data: () => ({
-    //
+    drawer: true,
   }),
   mounted() {
-    axios.get('api/testRoute'); //Test connection with backend, console should respond!
+    // axios.get('api/testRoute'); //Test connection with backend, console should respond!
+    // console.log(this.getSomethin());
+  },
+  methods: {
+    // getSomethin() {
+    //   return 'hei';
+    // },
   },
 };
 </script>
+
+<style>
+a{
+  
+}
+
+</style>
