@@ -60,7 +60,7 @@ export default {
   },
   mounted() {
     //// axios.get('api/testRoute'); //Test connection with backend, console should respond!
-     console.log(this.getSomethin());
+     //console.log(this.getSomethin());
   },
   methods: {
     // getSomethin() {
