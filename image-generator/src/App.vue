@@ -47,8 +47,8 @@ export default {
     },
   },
   mounted() {
-    this.getPic();
-    //this.preImages();
+    //this.getPic();
+    this.preImages();
   },
 };
 </script>

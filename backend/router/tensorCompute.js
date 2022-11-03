@@ -45,8 +45,8 @@ async function runModel() {
   // const byteTurtle = await getImageTurtle(bucket1);
   // const byteWave = await getImageTurtle(bucket2);
 
-  const byteTurtle = ; // buffer 1
-  const byteWave = ; // buffer 2
+  const byteTurtle = ""; // buffer 1
+  const byteWave = ""; // buffer 2
 
 
   // const stringTur = encode(byteTurtle.Body);
