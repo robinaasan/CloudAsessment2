@@ -31,6 +31,7 @@ export default {
       this.selectedFile = selectedFile;
     },
     async uploadFile() {
+      if (Object.keys(this.selectedFile).length === 0) return;
       const form = new Formdata();
       form.append('file', this.selectedFile);
       console.log(this.selectedFile);
