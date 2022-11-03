@@ -1,3 +1,11 @@
+const express = require('express');
+ 
+// Creating express object
+const app = express();
+ 
+// Defining port number
+const PORT = 3000;   
+
 const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
 // const handler = tfn.io.fileSystem(
@@ -16,6 +24,8 @@ async function runModel() {
     );
     console.log(vgg19model);
   }
+  const myImage = new Image(200, 200);
+  myImage.src = 'Green_Sea_Turtle_grazing_seagrass.jpg';
 }
 
 // function loadPicture(path_to_picture) {

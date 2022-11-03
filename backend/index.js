@@ -3,10 +3,16 @@ const express = require('express');
 const cors = require('cors'); //TODO: remove after build
 const bodyParser = require('body-parser');
 const testRoute = require('./router/testroute');
+const fileUpload = require('express-fileupload');
 
 require('dotenv').config();
 
 const app = express();
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 app.use(bodyParser.json());
 app.use(cors()); //TODO: remove after build
 app.use('/api/testRoute', testRoute);
