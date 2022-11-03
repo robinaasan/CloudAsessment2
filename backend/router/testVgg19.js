@@ -1,3 +1,11 @@
+const express = require('express');
+ 
+// Creating express object
+const app = express();
+ 
+// Defining port number
+const PORT = 3000;   
+
 const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
 

@@ -13,21 +13,19 @@ const fs = require('fs');
 const jpeg = require('jpeg-js');
 const ImageData = require('@canvas/image-data');
 
-const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 async function runModel() {
   let model;
 
   if (!model) {
-    model = await tf.loadGraphModel(
-      `file://style_transfer_tfjs/model.json`
-    );
+    model = await tf.loadGraphModel(`file://style_transfer_tfjs/model.json`);
   }
 
   console.log('model' + model);
 
-  const bucketName = "robiv-tensorpics";
-  const key = "pic"; // bruke senere det vi får inn fra den andre routen
+  const bucketName = 'robiv-tensorpics';
+  const key = 'pic'; // bruke senere det vi får inn fra den andre routen
   const s3KeyTurtle = `Green_Sea_Turtle_grazing_seagrass.jpg`;
   const s3KeyWave = `The_Great_Wave_off_Kanagawa.jpg`;
 
@@ -41,13 +39,11 @@ async function runModel() {
     Key: s3KeyWave,
   };
 
-
   // const byteTurtle = await getImageTurtle(bucket1);
   // const byteWave = await getImageTurtle(bucket2);
 
-  const byteTurtle = ""; // buffer 1
-  const byteWave = ""; // buffer 2
-
+  //const byteTurtle = ; // buffer 1
+  //const byteWave = ; // buffer 2
 
   // const stringTur = encode(byteTurtle.Body);
   // const stringWav = encode(byteWave.Body);
@@ -55,7 +51,7 @@ async function runModel() {
   console.log(byteTurtle.Body);
   console.log(byteWave.Body);
 
-  let test = encode(byteTurtle.Body)
+  let test = encode(byteTurtle.Body);
 
   const turtleFin = tf.tidy(() => {
     const turtleTensor = tf.node.decodeImage(byteTurtle.Body);
@@ -71,7 +67,6 @@ async function runModel() {
     //console.log(waveNormalized);
 
     return turtleNormalized;
-
   });
 
   const waveFin = tf.tidy(() => {
@@ -88,9 +83,7 @@ async function runModel() {
     //console.log(waveNormalized);
 
     return waveNormalized;
-
   });
-
 
   console.log('turtlefin: ' + turtleFin.shape);
   console.log('wavefin: ' + waveFin.shape);
@@ -110,13 +103,12 @@ async function runModel() {
   let newRes = encode(newImage.buffer);
   console.log('bildet: ' + newImage);
   console.log('bildet index: ' + newImage.length);
-  console.log(typeof (newImage));
-
+  console.log(typeof newImage);
 
   let result = encode(newImage);
 
   if (result === newRes) {
-    console.log('lik"!EWEERBERTB')
+    console.log('lik"!EWEERBERTB');
   }
 
   const returnImageNew = toImageFTensor(resultTens);
@@ -170,7 +162,6 @@ async function runModel() {
   // const tensorTurtleFin = preprocess(tensorTurtle, [dimensionsTur.height, dimensionsTur.width, -1]);
   // const tensorWaveFin = preprocess(tensorWave, tensorWave.shape);
 
-
   // console.log('preproc turle' + tensorTurtleFin);
   // console.log('preproc wave' + tensorWaveFin);
 
@@ -206,8 +197,8 @@ function toImageFTensor(tensor) {
   var ctx = canvas.getContext('2d');
   const [height, width] = tensor.shape;
   //create a buffer array
-  const buffer = new Uint8ClampedArray(width * height * 4)
-  //create an Image data var 
+  const buffer = new Uint8ClampedArray(width * height * 4);
+  //create an Image data var
   const imageData = new ImageData(width, height);
   //get the tensor values as data
   const data = tensor.dataSync();
@@ -215,16 +206,16 @@ function toImageFTensor(tensor) {
   var i = 0;
   for (var y = 0; y < height; y++) {
     for (var x = 0; x < width; x++) {
-      var pos = (y * width + x) * 4;      // position in buffer based on x and y
-      buffer[pos] = data[i]             // some R value [0, 255]
-      buffer[pos + 1] = data[i + 1]           // some G value
-      buffer[pos + 2] = data[i + 2]           // some B value
-      buffer[pos + 3] = 255;                // set alpha channel
-      i += 3
+      var pos = (y * width + x) * 4; // position in buffer based on x and y
+      buffer[pos] = data[i]; // some R value [0, 255]
+      buffer[pos + 1] = data[i + 1]; // some G value
+      buffer[pos + 2] = data[i + 2]; // some B value
+      buffer[pos + 3] = 255; // set alpha channel
+      i += 3;
     }
   }
   //set the buffer to the image data
-  imageData.data.set(buffer)
+  imageData.data.set(buffer);
   //show the image on canvas
   //ctx.putImageData(imageData, 0, 0)
   //console.log(imageData);
@@ -251,13 +242,15 @@ function preprocess(imageTensor) {
 const getImageTurtle = function (bucket) {
   return new Promise(function (res) {
     const dataTurtle = s3.getObject(bucket).promise();
-    dataTurtle.then((data) => { res(data) });
-  })
-}
+    dataTurtle.then((data) => {
+      res(data);
+    });
+  });
+};
 
 function encode(data) {
   let buf = Buffer.from(data);
-  let base64 = buf.toString("base64");
+  let base64 = buf.toString('base64');
   return base64;
 }
 
@@ -279,18 +272,15 @@ function toImageDataFromBase64(string) {
     image.src = string;
 
     return context.getImageData(0, 0, width, height);
-
-  }
-
+  };
 }
 
 function drawCanvas(string) {
   const canvas = createCanvas(200, 200);
   const ctx = canvas.getContext('2d');
 
-  ctx.drawImage("data:image/jpg;base64," + string, 50, 0, 70, 70);
+  ctx.drawImage('data:image/jpg;base64,' + string, 50, 0, 70, 70);
   return canvas;
-
 
   // canvas.width = width;
   // canvas.height = height;
@@ -299,9 +289,7 @@ function drawCanvas(string) {
   console.log('Cwidth' + canvas.width);
 
   //image.onload = () => context.drawImage(image, 0, 0);
-
-};
-
+}
 
 // avatar.onload = () => ctx.drawImage(avatar, 50, 50)
 // avatar.src = res.body
@@ -341,8 +329,6 @@ router.get('/', (req, res) => {
   }
 
   getData();
-
-
 });
 
 module.exports = router;
