@@ -2,20 +2,19 @@
   <v-app>
     <v-navigation-drawer color="grey-darken-2" v-model="drawer" temporary>
       <v-list nav>
-        <router-link to="upload">
-          <v-list-item
-            prepend-icon="mdi-email"
-            title="upload"
-            value="upload"
-          ></v-list-item
-        ></router-link>
-        <router-link to="load">
-          <v-list-item
-            prepend-icon="mdi-account-supervisor-circle"
-            title="load"
-            value="load"
-          ></v-list-item>
-        </router-link>
+        <v-list-item
+          prepend-icon="mdi-email"
+          title="upload"
+          value="upload"
+          @click="goToRoute('upload')"
+        ></v-list-item>
+
+        <v-list-item
+          prepend-icon="mdi-account-supervisor-circle"
+          title="load"
+          value="load"
+          @click="goToRoute('load')"
+        ></v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar color="grey-lighten-2">
@@ -57,16 +56,22 @@ export default {
       let images = await axios.get('/api/persistenceCheck/tensorPictures');
       console.log(images.data);
     },
+    goToRoute(name) {
+      this.$router.push({ name: name });
+    },
+    encode(data) {
+      let buf = Buffer.from(data);
+      let base64 = buf.toString('base64');
+      return base64;
+    },
   },
   mounted() {
     //// axios.get('api/testRoute'); //Test connection with backend, console should respond!
      //console.log(this.getSomethin());
   },
-  methods: {
-    // getSomethin() {
-    //   return 'hei';
-    // },
-  },
+  // getSomethin() {
+  //   return 'hei';
+  // },
 };
 </script>
 

@@ -15,7 +15,7 @@ const ImageData = require('@canvas/image-data');
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-async function runModel() {
+async function runModel(picture1, picture2) {
   let model;
 
   if (!model) {
@@ -26,8 +26,8 @@ async function runModel() {
 
   const bucketName = 'robiv-tensorpics';
   const key = 'pic'; // bruke senere det vi får inn fra den andre routen
-  const s3KeyTurtle = `Green_Sea_Turtle_grazing_seagrass.jpg`;
-  const s3KeyWave = `The_Great_Wave_off_Kanagawa.jpg`;
+  //const s3KeyTurtle = `Green_Sea_Turtle_grazing_seagrass.jpg`;
+  //const s3KeyWave = `The_Great_Wave_off_Kanagawa.jpg`;
 
   const bucket1 = {
     Bucket: bucketName,
@@ -39,17 +39,19 @@ async function runModel() {
     Key: s3KeyWave,
   };
 
-  // const byteTurtle = await getImageTurtle(bucket1);
-  // const byteWave = await getImageTurtle(bucket2);
+  //const byteTurtle = await getImageTurtle(bucket1);
+  //const byteWave = await getImageTurtle(bucket2);
 
-  //const byteTurtle = ; // buffer 1
-  //const byteWave = ; // buffer 2
+  const byteTurtle = picture1.data; // buffer 1
+  const byteWave = picture2.data; // buffer 2
 
   // const stringTur = encode(byteTurtle.Body);
   // const stringWav = encode(byteWave.Body);
 
-  console.log(byteTurtle.Body);
-  console.log(byteWave.Body);
+  //console.log(byteTurtle.Body);
+  //console.log(byteWave.Body);
+
+  console.log(byteTurtle);
 
   let test = encode(byteTurtle.Body);
 
@@ -294,7 +296,7 @@ function drawCanvas(string) {
 // avatar.onload = () => ctx.drawImage(avatar, 50, 50)
 // avatar.src = res.body
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   console.log('initialized!');
 
   /*getImageTurtle(bucket1)
@@ -321,13 +323,14 @@ router.get('/', (req, res) => {
   //const styleImg = "data:image/jpg;base64," + bilde2;
 
   // Tensor code
-
+  const files = req.files;
+  //res.status(200).send('got the picture!');
+  console.log(files.file1.data);
   async function getData() {
-    let resultPic = await runModel();
+    let resultPic = await runModel(files.file1, files.file2);
     console.log('sender til client pic: ' + resultPic);
     res.send(resultPic);
   }
-
   getData();
 });
 
