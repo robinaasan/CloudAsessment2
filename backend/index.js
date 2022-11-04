@@ -7,7 +7,7 @@ const fileUpload = require('express-fileupload');
 const testRoutefirst = require('./router/testroute');
 const testRoute = require('./router/tensorCompute');
 const getOptions = require('./router/getoptions');
-//const persistence = require('./router/persistenceCheck');
+const persistence = require('./router/persistenceCheck');
 
 require('dotenv').config();
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(cors()); //TODO: remove after build
 app.use('/api/tensorCompute', testRoute);
 app.use('/api/tensor', testRoute);
-//app.use('/api/persistenceCheck', persistence);
+app.use('/api/persistenceCheck', persistence);
 app.use('/api/testRoute', testRoutefirst);
 app.use('/api/getOptions', getOptions);
 

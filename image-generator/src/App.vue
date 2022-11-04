@@ -44,25 +44,13 @@ export default {
     drawer: true,
   }),
   methods: {
-    async getPic() {
-      let str = 'data:image/jpeg;base64,';
-      let pi = await axios.get('api/tensorCompute'); //Test connection with backend, console should respond!
-      console.log(pi.data);
-      str += pi.data;
-      this.pic = str;
-    },
 
-    async preImages() {
-      let images = await axios.get('/api/persistenceCheck/tensorPictures');
-      console.log(images.data);
-    },
+    // async preImages() {
+    //   let images = await axios.get('/api/persistenceCheck/tensorPictures');
+    //   console.log(images.data);
+    // },
     goToRoute(name) {
       this.$router.push({ name: name });
-    },
-    encode(data) {
-      let buf = Buffer.from(data);
-      let base64 = buf.toString('base64');
-      return base64;
     },
   },
   mounted() {
