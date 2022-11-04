@@ -2,14 +2,17 @@
   <v-row justify="center">
     <v-col cols="6">
       <v-card height="400px"
-        ><input type="file" @change="handleFileUpload" /><v-btn
+        ><h2>Upload pictures</h2>
+        <input multiple type="file" @change="handleFileUpload" /><v-btn
           @click="uploadFile()"
           >Upload</v-btn
         >
       </v-card>
     </v-col>
     <v-col cols="6">
-      <v-card height="400px"></v-card>
+      <v-card height="400px">
+        <h2>Shoose pictures</h2>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -22,20 +25,21 @@ export default {
   name: 'upload',
   data() {
     return {
-      selectedFile: {},
+      selectedFile: [],
     };
   },
   methods: {
     handleFileUpload(e) {
-      const selectedFile = e.target.files[0];
+      const selectedFile = e.target.files;
       this.selectedFile = selectedFile;
     },
     async uploadFile() {
-      if (Object.keys(this.selectedFile).length === 0) return;
+      if (this.selectedFile.length === 0) return;
       const form = new Formdata();
-      form.append('file', this.selectedFile);
+      form.append('file1', this.selectedFile[0]);
+      form.append('file2', this.selectedFile[1]);
       console.log(this.selectedFile);
-      let result = await axios.post(`api/testRoute/picture`, form, {
+      let result = await axios.post(`/api/tensorCompute`, form, {
         headers: {
           //'Content-Type': 'multipart/form-data',
           'Content-Type': 'multipart/form-data',
@@ -44,6 +48,17 @@ export default {
       });
       console.log(result);
     },
+    async getAllOptionsS3() {
+      try {
+        let options = await axios.get(`/api/getOptions`);
+        console.log(options);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  mounted() {
+    this.getAllOptionsS3();
   },
 };
 </script>
