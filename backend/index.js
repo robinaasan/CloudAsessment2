@@ -1,13 +1,9 @@
 const express = require('express');
-//const { PORT } = require("./config");
-const cors = require('cors'); //TODO: remove after build
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-
-const testRoutefirst = require('./router/testroute');
-const testRoute = require('./router/tensorCompute');
-const getOptions = require('./router/getoptions');
-//const persistence = require('./router/persistenceCheck');
+//all routes
+const tensorRoute = require('./router/tensorCompute');
+const persistence = require('./router/persistenceCheck');
 
 require('dotenv').config();
 
@@ -18,13 +14,12 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(cors()); //TODO: remove after build
-app.use('/api/tensorCompute', testRoute);
-app.use('/api/tensor', testRoute);
-//app.use('/api/persistenceCheck', persistence);
-app.use('/api/testRoute', testRoutefirst);
-app.use('/api/getOptions', getOptions);
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/tensorCompute', tensorRoute);
+app.use('/api/persistenceCheck', persistence);
 
+app.use(express.static('../image-generator/dist'));
 app.listen(process.env.PORT, () =>
   console.log(`App listening at http://localhost:${process.env.PORT}`)
 );

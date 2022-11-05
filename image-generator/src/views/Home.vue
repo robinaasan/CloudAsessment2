@@ -4,8 +4,5 @@
 </template>
 
 <script>
-//TODO: add all the routes
-//import LoadPicturesVue from './LoadPictures.vue';
-
 export default {};
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <div>hello</div>
+    <div>User should get the option to get loaded pictures here!</div>
   </v-main>
 </template>
 
