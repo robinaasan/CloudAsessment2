@@ -25,13 +25,9 @@ const params = {
 //const command = new AddTagsToResourceCommand(params);
 
 let test = async () => {
-  try {
-    //const data = await elasticache.send(command);
-    redisClient.setEx(foldername, 900, 'hellooooo');
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
+  //const data = await elasticache.send(command);
+  redisClient.setEx(foldername, 900, 'hellooooo');
+  //console.log(data);
 };
 test();
 

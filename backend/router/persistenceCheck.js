@@ -1,19 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 const redis = require('redis');
-const {
-  ElastiCacheClient,
-  AddTagsToResourceCommand,
-} = require('@aws-sdk/client-elasticache');
 require('dotenv').config();
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 const foldername = 'tensorPictures';
-const redisClient = redis.createClient(
-  'iverrobredis.km2jzi.ng.0001.apse2.cache.amazonaws.com:6379'
-);
-const elasticache = new ElastiCacheClient({ region: 'ap-southeast-2' });
-
+const redisClient = redis.createClient({
+  url: 'redis://iverrobredis.km2jzi.ng.0001.apse2.cache.amazonaws.com:6379',
+});
 (async () => {
   try {
     await redisClient.connect();
@@ -23,28 +17,14 @@ const elasticache = new ElastiCacheClient({ region: 'ap-southeast-2' });
 })();
 
 async function checkRedis() {
-  if (foldername) {
-    const result = await redisClient.get(foldername);
-    if (result) {
-      const resultStr = JSON.parse(result);
-      return resultStr;
-    } else {
-      const theImages = await checkS3(foldername);
-      const params = {
-        key: 'foldername',
-        value: JSON.stringify(theImages),
-      };
-      const command = new AddTagsToResourceCommand(params);
-      try {
-        const data = await elasticache.send(command);
-        console.log('data is:', data);
-      } catch (err) {
-        res.status(400).send('server error');
-      }
-      //redisClient.setEx(foldername, 900, JSON.stringify(theImages));
-      return theImages;
-    }
+  const result = await redisClient.get(foldername);
+  if (result) {
+    const resultStr = JSON.parse(result);
+    return resultStr;
   } else {
+    const theImages = await checkS3(foldername);
+    redisClient.setEx(foldername, 900, JSON.stringify(theImages));
+    return theImages;
   }
 }
 
