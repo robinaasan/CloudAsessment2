@@ -2,7 +2,7 @@
 //   ElastiCacheClient,
 //   AddTagsToResourceCommand,
 // } = require('@aws-sdk/client-elasticache');
-//const redis = require('redis');
+const redis = require('redis');
 const foldername = 'tensorPictures';
 //const elasticache = new ElastiCacheClient({ region: 'ap-southeast-2' });
 
