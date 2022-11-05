@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="btn" @click="getThePictures" elevation="10" color="orange"
+  <v-btn class="btn" @click="getThePictures" elevation="10" color="#FFA62B"
     >Show pictures
     <v-dialog
       activator="parent"
@@ -23,15 +23,11 @@
               cols="6"
             >
               <v-img
-                style="
-                  border-radius: 5px;
-                  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-                "
-                :src="src"
+                :src="src.dataTurtleLink"
                 @click="choosePicture(index)"
                 :lazy-src="`https://picsum.photos/10/6?image=${index * 5 + 10}`"
                 cover
-                class="bg-grey-lighten-2"
+                class="bg-grey-lighten-2 image-class"
               >
                 <template v-slot:placeholder>
                   <v-row
@@ -55,7 +51,7 @@
           </v-row>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" block @click="dialog = false"
+          <v-btn color="#82C0CC" block @click="dialog = false"
             >Close Dialog</v-btn
           >
         </v-card-actions>
@@ -86,7 +82,9 @@ export default {
     },
     choosePicture(index) {
       this.chosen = index;
-      this.$emit('newSelectedPicture', { selected: this.chosen });
+      this.$emit('newSelectedPicture', {
+        selected: this.picturesToChooseFrom[index],
+      });
     },
   },
 };
@@ -114,5 +112,10 @@ export default {
 
 .container {
   position: relative;
+}
+
+.image-class {
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 </style>

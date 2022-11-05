@@ -1,3 +1,0 @@
-[submodule "backend/vgg19-tensorflowjs-model"]
-	path = backend/vgg19-tensorflowjs-model
-	url = https://github.com/DavidCai1993/vgg19-tensorflowjs-model.git
