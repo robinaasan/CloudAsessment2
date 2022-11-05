@@ -6,6 +6,18 @@ const redis = require('redis');
 const foldername = 'tensorPictures';
 const elasticache = new ElastiCacheClient({ region: 'ap-southeast-2' });
 
+const redisClient = redis.createClient({
+  url: 'redis://iverrobredis.km2jzi.ng.0001.apse2.cache.amazonaws.com:6379',
+});
+
+(async () => {
+  try {
+    await redisClient.connect();
+  } catch (err) {
+    console.log(err);
+  }
+})();
+
 const params = {
   key: foldername,
   value: 'hellpo',
@@ -20,20 +32,7 @@ let test = async () => {
     console.log(err);
   }
 };
-
 test();
-
-const redisClient = redis.createClient({
-  url: 'redis://iverrobredis.km2jzi.ng.0001.apse2.cache.amazonaws.com:6379',
-});
-
-(async () => {
-  try {
-    await redisClient.connect();
-  } catch (err) {
-    console.log(err);
-  }
-})();
 
 // async function checkRedis() {
 //   const result = await redisClient.get(foldername);
