@@ -24,12 +24,10 @@ async function checkRedis() {
   if (result) {
     const resultStr = JSON.parse(result);
     console.log('Was already stored!', resultStr);
-    return resultStr;
   } else {
     //const theImages = await checkS3(foldername);
     redisClient.setEx(foldername, 900, JSON.stringify(theImages));
     console.log('Was NOT stored!');
-    return theImages;
   }
 }
 
