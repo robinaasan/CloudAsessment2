@@ -19,6 +19,7 @@ const redisClient = redis.createClient({
 async function checkRedis() {
   const result = await redisClient.get(foldername);
   if (result) {
+    console.log('WAS STORED IN REDIS!');
     const resultStr = JSON.parse(result);
     return resultStr;
   } else {
