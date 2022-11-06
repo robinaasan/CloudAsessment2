@@ -42,18 +42,17 @@ async function checkS3(s3key) {
   const bucketName = 'robiv-tensorpics';
   const bucket = { Bucket: bucketName, Prefix: s3Key };
   const getPic = await getImageList(bucket);
-  
+
   for (i = 1; i < getPic.Contents.length; i++) {
     let bucketLink = {
       Bucket: bucketName,
       Key: getPic.Contents[i].Key,
-      Expires: 3600, 
     };
     let bucketObject = { Bucket: bucketName, Key: getPic.Contents[i].Key };
     let values = await getImages(bucketLink, bucketObject);
     listBytes.push(values);
   }
-  
+
   return listBytes;
 }
 
