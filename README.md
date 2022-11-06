@@ -1,2 +1,4 @@
 # CloudAsessment2
-Scaling project
+# How to use:
+# run npm install in the 'backend' folder
+
