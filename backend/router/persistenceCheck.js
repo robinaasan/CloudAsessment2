@@ -6,6 +6,7 @@ const AWS = require('aws-sdk');
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 const foldername = 'tensorPictures';
 const redisClient = redis.createClient();
+
 (async () => {
   try {
     await redisClient.connect();
@@ -36,7 +37,6 @@ const getImageList = function (bucket) {
 };
 
 async function checkS3(s3key) {
-  // Serve from S3
   listBytes = [];
   const s3Key = s3key;
   const bucketName = 'robiv-tensorpics';
@@ -47,7 +47,7 @@ async function checkS3(s3key) {
     let bucketLink = {
       Bucket: bucketName,
       Key: getPic.Contents[i].Key,
-      Expires: 3600, //expires long after redis has deleted it
+      Expires: 3600, 
     };
     let bucketObject = { Bucket: bucketName, Key: getPic.Contents[i].Key };
     let values = await getImages(bucketLink, bucketObject);
@@ -69,7 +69,7 @@ const getImages = function (bucketLink, bucketObject) {
 };
 
 router.get('/', async (req, res) => {
-  const responsen = await checkRedis(); //list with objects with link and bucketobject
+  const responsen = await checkRedis();
   res.status(200).send(responsen);
 });
 
