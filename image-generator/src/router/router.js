@@ -9,7 +9,6 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      redirect: '/upload',
       component: Home,
     },
     {
