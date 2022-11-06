@@ -52,12 +52,12 @@ function getS3Object(bucketObject) {
 }
 
 router.post('/', async (req, res) => {
-  // Tensor code
   const file = req.files.file1;
   const bucket = JSON.parse(req.body.bucket);
   const file2 = await getS3Object(bucket);
   const bufferDatafile1 = file.data;
   const bufferDatafile2 = file2.Body;
+  
   (async function () {
     let resultPic = await runModel(bufferDatafile1, bufferDatafile2);
     resultPic = encode(resultPic);
