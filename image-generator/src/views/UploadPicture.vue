@@ -30,12 +30,11 @@
                   class="d-flex justify-center align-center"
                   height="100%"
                 >
-                  <KeepAlive>
-                    <pickPicturesVue
-                      @getAllOptionsS3="getAllOptionsS3"
-                      @newSelectedPicture="newSelectedPicture"
-                      :picturesToChooseFrom="picturesToChooseFrom"
-                  /></KeepAlive>
+                  <pickPicturesVue
+                    @getAllOptionsS3="getAllOptionsS3"
+                    @newSelectedPicture="newSelectedPicture"
+                    :picturesToChooseFrom="picturesToChooseFrom"
+                  />
                 </v-card>
               </v-col>
             </v-row>
