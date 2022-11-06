@@ -13,8 +13,6 @@ WORKDIR /src/app
 
 RUN npm install
 
-RUN redis-server
-
 EXPOSE 3000
 
 CMD ["npm", "start"]
