@@ -24,7 +24,7 @@
           <v-container>
             <v-row class="fill-height">
               <v-col cols="12">
-                <h3>Shoose pictures</h3>
+                <h3>Choose pictures</h3>
 
                 <v-card
                   class="d-flex justify-center align-center"
