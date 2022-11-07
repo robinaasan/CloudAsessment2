@@ -5,7 +5,9 @@ require('dotenv').config();
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 const foldername = 'tensorPictures';
-const redisClient = redis.createClient();
+const redisClient = redis.createClient(
+  'redis://iverrob-tensor.km2jzi.ng.0001.apse2.cache.amazonaws.com:6379'
+);
 
 (async () => {
   try {
